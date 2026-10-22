@@ -1,0 +1,11 @@
+{
+  "name": "sbs-sample",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Fictional sample with deliberate, harmless test issues for the SBS pipeline. Do not deploy.",
+  "main": "src/server.js",
+  "dependencies": {
+    "express": "4.17.1",
+    "lodash": "4.17.20"
+  }
+}

@@ -1,0 +1,13 @@
+# Deliberate test issue for the SBS runner: publishing with a stored, long-lived registry token instead of npm
+# trusted publishing. It never runs: manual trigger only, and the job is switched off.
+name: release
+on: workflow_dispatch
+permissions: {}
+jobs:
+  publish:
+    if: false
+    runs-on: ubuntu-latest
+    steps:
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -1,0 +1,2 @@
+# Deliberate test issue: a .pth line that starts with "import" runs whenever Python starts. This one does nothing.
+import sys

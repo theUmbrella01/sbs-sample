@@ -7,7 +7,8 @@ deployed. Every value that looks like a secret is random and opens nothing.
 ## Deliberate test issues
 
 Each file below contains a harmless, deliberate issue, so every part of the pipeline has something to show. The
-expected results were checked with the SBS runner (static stage) on 2026-10-22: 9 files, 11 draft findings.
+expected results were checked with the SBS runner (static stage, `static-0.4`) on 2026-10-24: 14 files, 15 draft findings,
+and one entry on the reviewer's list of checks with no SBS rule.
 
 | File | Issue | Reported by | SBS rule |
 | --- | --- | --- | --- |
@@ -20,6 +21,12 @@ expected results were checked with the SBS runner (static stage) on 2026-10-22: 
 | `src/server.js` | TLS certificate verification switched off | Semgrep (SBS rules) | SBS-E03 |
 | `src/server.js` | stack trace sent to the client | Semgrep (SBS rules) | SBS-S05 |
 | `Dockerfile` | base image `latest`, runs as root, no health check | Checkov | SBS-S04 and others |
+| `worker/requirements.txt` | `brotli` 1.2.0, below the Brotli decoder fix (CVE-2026-111497) | SBS checks (Threat Watch floor) | SBS-S04 |
+| `worker/requirements.txt` | `pip` 26.2.1, whose bundled certifi still trusts the compromised emSign CAs | SBS checks (Threat Watch floor) | SBS-S04 |
+| `.nvmrc` | Node.js 22.12.0, below the Brotli decoder fix (22.23.4) | SBS checks (Threat Watch floor) | SBS-S04 |
+| `worker/decode.py` | Brotli data from a request decompressed | Semgrep (SBS rules) | SBS-S04 |
+| `worker/sample_hook.pth` | a `.pth` line that runs when Python starts (it does nothing) | SBS checks (Threat Watch) | SBS-S04 |
+| `.github/workflows/release.yml` | `npm publish` with a stored registry token instead of trusted publishing; never runs (manual trigger, job switched off) | SBS checks: the reviewer's list, not the report (no SBS 1.0 rule; proposed SBS-S06) | none yet |
 | `src/server.js` | `/api/orders/:id` has no login or record-level check | **no scanner**: the reviewer adds it by hand | SBS-D02 |
 
 ClamAV scans everything and should find nothing: a malware test file would make the runner refuse the whole
